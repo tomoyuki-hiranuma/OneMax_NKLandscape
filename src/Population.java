@@ -3,7 +3,7 @@ import java.util.Random;
 public class Population {
     private Individual[] fPopulation;
     private Random rand = new Random();
-    private int fIndividualSize=5;
+    private int fIndividualSize=10;
     private int fPopulationSize=10;
 
     public Population(){

@@ -6,8 +6,6 @@
     calcEvaluateをいちいち記述しなくてもどこかで実行することでMainでの無駄が省けそう
 */
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Individual {
@@ -23,6 +21,7 @@ public class Individual {
             int element = rand.nextInt(2);
             this.fArray[i] = element;
         }
+        calcEvaluate();
     }
 
     public Individual(Individual individual){
@@ -49,12 +48,12 @@ public class Individual {
     }
 
     public void printIndividual(){
-        System.out.println("array");
+        System.out.print("array: ");
         for(int i=0; i<this.fArray.length; i++){
-            System.out.print(this.fArray[i]+" ");
+            System.out.print(this.fArray[i] + " ");
         }
         System.out.println();
-        System.out.println("Evaluate value");
+        System.out.print("Evaluate value: ");
         System.out.println(this.fEvaluate);
     }
 
