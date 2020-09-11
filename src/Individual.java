@@ -9,11 +9,12 @@
 import java.util.Random;
 
 public class Individual {
-    private int[] fArray;
-    private int fNumberOfSize;
+    private int[] fArray; // 個体の持ってる配列（遺伝子）
+    private int fNumberOfSize; // 遺伝子サイズ
     private Random rand = new Random();
-    private int fEvaluate=0;
+    private int fEvaluate=0; // 評価値
 
+    // コンストラクタ
     public Individual(int numberOfSize) {
         this.fArray = new int[numberOfSize];
         this.fNumberOfSize = numberOfSize;
@@ -24,6 +25,7 @@ public class Individual {
         calcEvaluate();
     }
 
+    // コピーコンストラクタ
     public Individual(Individual individual){
         this.fArray = new int[individual.fArray.length];
         this.fEvaluate = individual.fEvaluate;
@@ -32,6 +34,7 @@ public class Individual {
         }
     }
 
+    // 評価値計算
     public void calcEvaluate(){
         int sum = 0;
         for(int i=0;i<this.fArray.length; i++){
