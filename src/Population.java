@@ -40,6 +40,7 @@ public class Population {
         }
     }
 
+    // 1世代
     public void doOneGeneration(){
         double MutationProb = rand.nextDouble();
         int index1 = rand.nextInt(fIndividualSize);
@@ -51,6 +52,7 @@ public class Population {
         Individual parent2 = fPopulation[index2];
         Individual child = new Individual(crossOver(parent1, parent2));
 
+        // 突然変異
         if(fMutationProb > MutationProb){
             
         }
