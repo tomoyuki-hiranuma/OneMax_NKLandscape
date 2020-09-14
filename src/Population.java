@@ -3,9 +3,10 @@ import java.util.Random;
 public class Population {
     private Individual[] fPopulation; // 集団
     private Random rand = new Random();
-    private int fIndividualSize;
-    private int fPopulationSize;
+    private int fIndividualSize = 10;
+    private int fPopulationSize = 10;
     private double fMutationProb = 0.01;
+    private double fCrossProb = 0.6;
 
     public Population(int individualSize, int populationSize){
         this.fIndividualSize = individualSize;
@@ -57,6 +58,23 @@ public class Population {
         }
     }
 
+    public void select(Population pop){
+
+    }
+
+    public void sortByEvaluation(){
+        // Bubble Sort
+        for(int i = 0; i < this.fPopulation.length - 1 ; i++){
+            for(int j = i+1 ; j < this.fPopulation.length; j++){
+                if(this.fPopulation[i].getEvaluate() > this.fPopulation[j].getEvaluate()){
+                    Individual tmp = this.fPopulation[i];
+                    this.fPopulation[i] = this.fPopulation[j];
+                    this.fPopulation[j] = tmp;
+                }
+            }
+        }
+    }
+
     public void printPopulation(){
         System.out.println("集団出力");
         for(int i=0; i<this.fPopulation.length; i++){
@@ -67,29 +85,48 @@ public class Population {
     // 1世代
     public void doOneGeneration(){
         System.out.println("世代更新");
-        double MutationProb = rand.nextDouble();
-        int index1 = rand.nextInt(fIndividualSize);
-        int index2 = rand.nextInt(fIndividualSize);
-        while(index1 == index2){
-            index2 = rand.nextInt(fIndividualSize);
-        }
-        Individual parent1 = fPopulation[index1];
-        Individual parent2 = fPopulation[index2];
-        Individual child = new Individual(crossOver(parent1, parent2));
-        System.out.println(index1 + "と" + index2 + "との交叉");
-        child.printArray();
-        // 突然変異
-        if(fMutationProb > MutationProb){
+        // 子集団
+        Population children = new Population(fIndividualSize, fPopulationSize);
 
+        for(int i = 0; i < children.fIndividualSize; i++){
+            // if(rand.nextDouble() < fCrossProb){
+                int index1 = rand.nextInt(fIndividualSize);
+                int index2 = rand.nextInt(fIndividualSize);
+                while(index1 == index2){
+                    index2 = rand.nextInt(fIndividualSize);
+                }
+                Individual parent1 = fPopulation[index1];
+                Individual parent2 = fPopulation[index2];
+                Individual child = new Individual(crossOver(parent1, parent2));
+                System.out.println(index1 + "と" + index2 + "との交叉");
+                child.printArray();
+                // 突然変異
+                if(rand.nextDouble() < fMutationProb){
+
+                }
+                children.setIndividual(i, child);
+            // }
         }
-        select(child);
+        children.sortByEvaluation();
+        children.printPopulation();
+        // select(children);
     }
+
+    public void setIndividual(int index, Individual individual){
+        this.fPopulation[index] = individual;
+    }
+
+    public Individual getIndividual(int index){
+        return this.fPopulation[index];
+    }
+    
 
     public static void main(String[] args){
         int populationSize = 10;
         int individualSize = 10;
         Population pop1 = new Population(individualSize, populationSize);
         pop1.printPopulation();
+        pop1.sortByEvaluation();
         pop1.doOneGeneration();
         pop1.printPopulation();
     }
