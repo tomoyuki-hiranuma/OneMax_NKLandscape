@@ -17,8 +17,8 @@ public class Individual {
     public Individual(int numberOfSize) {
         Random rand = new Random();
         this.fArray = new int[numberOfSize];
+        this.fCouple = new double[numberOfSize];
         for(int i = 0; i < this.fArray.length ; i++){
-            rand.setSeed(i);
             int element = rand.nextInt(2);
             this.fArray[i] = element;
             this.fCouple[i] = rand.nextDouble();
@@ -30,8 +30,10 @@ public class Individual {
     public Individual(Individual individual){
         this.fArray = new int[individual.fArray.length];
         this.fEvaluate = individual.fEvaluate;
+        this.fCouple = new double[individual.fArray.length];
         for(int i=0; i<individual.fArray.length; i++){
             this.fArray[i] = individual.fArray[i];
+            this.fCouple[i] = individual.fCouple[i];
         }
     }
 
@@ -51,9 +53,9 @@ public class Individual {
         System.out.println();
     }
 
-    public void printIndividual(){
-        System.out.print("array: ");
-        for(int i=0; i<this.fArray.length; i++){
+    public void printIndividual(int index){
+        System.out.print("array[" + index + "]: ");
+        for(int i = 0; i < this.fArray.length; i++){
             System.out.print(this.fArray[i] + " ");
         }
         System.out.println();
@@ -81,6 +83,13 @@ public class Individual {
     }
     public int getElement(int index){
         return this.fArray[index];
+    }
+
+    public double[] getCouple(){
+        return this.fCouple;
+    }
+    public void setCouple(int index, double x){
+        this.fCouple[index] = x;
     }
 
     public static void main(String args[]){
