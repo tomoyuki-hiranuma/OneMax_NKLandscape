@@ -10,17 +10,18 @@ import java.util.Random;
 
 public class Individual {
     private int[] fArray; // 個体の持ってる配列（遺伝子）
-    private int fNumberOfSize; // 遺伝子サイズ
-    private Random rand = new Random();
-    private int fEvaluate=0; // 評価値
+    private double fEvaluate=0; // 評価値
+    private double[] fCouple;
 
     // コンストラクタ
     public Individual(int numberOfSize) {
+        Random rand = new Random();
         this.fArray = new int[numberOfSize];
-        this.fNumberOfSize = numberOfSize;
-        for(int i=0;i<this.fNumberOfSize;i++){
+        for(int i = 0; i < this.fArray.length ; i++){
+            rand.setSeed(i);
             int element = rand.nextInt(2);
             this.fArray[i] = element;
+            this.fCouple[i] = rand.nextDouble();
         }
         calcEvaluate();
     }
@@ -36,11 +37,11 @@ public class Individual {
 
     // 評価値計算
     public void calcEvaluate(){
-        int sum = 0;
-        for(int i=0;i<this.fArray.length; i++){
-            sum += this.fArray[i];
+        double sum = 0;
+        for(int i=0;i<this.fCouple.length; i++){
+            sum += this.fCouple[i];
         }
-        this.fEvaluate = sum;
+        this.fEvaluate = sum / (double)this.fCouple.length;
     }
 
     public void printArray(){
@@ -72,8 +73,14 @@ public class Individual {
     public void setEvaluate(int evaluate){
         this.fEvaluate = evaluate;
     }
-    public int getEvaluate(){
+    public double getEvaluate(){
         return this.fEvaluate;
+    }
+    public void setElement(int index, int x){
+        this.fArray[index] = x;
+    }
+    public int getElement(int index){
+        return this.fArray[index];
     }
 
     public static void main(String args[]){
