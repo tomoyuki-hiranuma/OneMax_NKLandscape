@@ -1,5 +1,6 @@
 # OneMax_NKLandscape
 ## NKランドスケープをOnemax問題に適応して評価する 
+実装に不安あり  
 ### 論文の追試  
 * Coevolution to the Edge of Chaos: Coupled Fitness Landscapes, Poised States, and Coevolutionary Avalanches  
 
@@ -7,7 +8,6 @@
 GAの初歩的な問題で０，１のみを要素に持つ配列の合計値を最大化する。最適解は自明で要素数である。進化を繰り返して全ての要素が１になる個体を見つける。  
  
 ## NKランドスケープ 
-調査中  
 N...遺伝子長  
 K...近傍K個の遺伝子座  
 結合効果...0.0~1.0の間の数をランダムに割り当てる.  
