@@ -9,35 +9,41 @@
 import java.util.Random;
 
 public class Individual {
-    private int[] fArray;
-    private int fNumberOfSize;
-    private Random rand = new Random();
-    private int fEvaluate=0;
+    private int[] fArray; // 個体の持ってる配列（遺伝子）
+    private double fEvaluate=0; // 評価値
+    private double[] fCouple;
 
+    // コンストラクタ
     public Individual(int numberOfSize) {
+        Random rand = new Random();
         this.fArray = new int[numberOfSize];
-        this.fNumberOfSize = numberOfSize;
-        for(int i=0;i<this.fNumberOfSize;i++){
+        this.fCouple = new double[numberOfSize];
+        for(int i = 0; i < this.fArray.length ; i++){
             int element = rand.nextInt(2);
             this.fArray[i] = element;
+            this.fCouple[i] = rand.nextDouble();
         }
         calcEvaluate();
     }
 
+    // コピーコンストラクタ
     public Individual(Individual individual){
         this.fArray = new int[individual.fArray.length];
         this.fEvaluate = individual.fEvaluate;
+        this.fCouple = new double[individual.fArray.length];
         for(int i=0; i<individual.fArray.length; i++){
             this.fArray[i] = individual.fArray[i];
+            this.fCouple[i] = individual.fCouple[i];
         }
     }
 
+    // 評価値計算
     public void calcEvaluate(){
-        int sum = 0;
-        for(int i=0;i<this.fArray.length; i++){
-            sum += this.fArray[i];
+        double sum = 0;
+        for(int i=0;i<this.fCouple.length; i++){
+            sum += this.fCouple[i];
         }
-        this.fEvaluate = sum;
+        this.fEvaluate = sum / (double)this.fCouple.length;
     }
 
     public void printArray(){
@@ -47,9 +53,9 @@ public class Individual {
         System.out.println();
     }
 
-    public void printIndividual(){
-        System.out.print("array: ");
-        for(int i=0; i<this.fArray.length; i++){
+    public void printIndividual(int index){
+        System.out.print("array[" + index + "]: ");
+        for(int i = 0; i < this.fArray.length; i++){
             System.out.print(this.fArray[i] + " ");
         }
         System.out.println();
@@ -69,8 +75,21 @@ public class Individual {
     public void setEvaluate(int evaluate){
         this.fEvaluate = evaluate;
     }
-    public int getEvaluate(){
+    public double getEvaluate(){
         return this.fEvaluate;
+    }
+    public void setElement(int index, int x){
+        this.fArray[index] = x;
+    }
+    public int getElement(int index){
+        return this.fArray[index];
+    }
+
+    public double[] getCouple(){
+        return this.fCouple;
+    }
+    public void setCouple(int index, double x){
+        this.fCouple[index] = x;
     }
 
     public static void main(String args[]){
